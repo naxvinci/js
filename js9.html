@@ -1,0 +1,20 @@
+<script>
+    function check() {
+        var id = document.forms[0].user_id.value;
+        var pw = document.querySelector('[name=user_id]').value;
+        alert(id);
+        if (id == '') {
+            alert('ID를 입력해주세요.');
+            return;
+        }
+        if (pw == '') {
+            alert('PW를 입력해주세요.');
+            return;
+        }
+    }
+</script>
+<form>
+    ID : <input type='text' name='user_id'><br>
+    PW : <input type='text' name='user_pw'><br>
+    <input type='button' value='OK' onclick='check()'>
+</form>

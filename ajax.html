@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script>
+        var xmlHttp;
+
+
+        function createXMLHttpRequest() {
+
+            xmlHttp = new XMLHttpRequest();
+        }
+
+        function send() {
+            createXMLHttpRequest();
+            var url = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=AIzaSyCTYplSNTiCKEGeRmbK37noB3sdD1tMBlw&q=쯔양&type=video";
+
+            xmlHttp.onreadystatechange = callback;
+
+
+            xmlHttp.open("GET", url, true);
+
+
+            xmlHttp.send(null);
+        }
+
+        function callback() {
+
+            if (xmlHttp.readyState == 4) {
+                if (xmlHttp.status == 200) {
+                    temp = xmlHttp.responseText;
+                    // alert(temp);
+                    obj = JSON.parse(temp); //문자열을 객체로
+                    var items = obj.items;
+
+                    var code = "";
+
+                    for (var i = 0; i < items.length; i++) {
+                        var item = items[i];
+                        var snippet = item.snippet;
+                        var title = snippet.title;
+                        var thumbnails = snippet.thumbnails;
+                        var default2 = thumbnails.default;
+                        var url = default2.url;
+
+                        var videoId = item.id.videoId;
+
+                        code += '<div>';
+                        code += '<img src="' + url + '">';
+                        code += '<a href="http://www.youtube.com/watch?v=' + videoId + '">'
+                            + title + '</a>';
+                        code += '</div>';
+                        console.log(title, url);
+
+                    } document.querySelector("#list").innerHTML = code;
+                }
+            }
+        }    
+    </script>
+</head>
+
+<body onload="send()">
+    <input type="button" value="가져와" onclick="send()">
+
+    <div id="list"></div>
+</body>
+
+</html>
